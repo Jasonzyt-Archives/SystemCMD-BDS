@@ -9,10 +9,12 @@
 #include <fstream>
 #include <string>
 #include <algorithm>
+#include <time.h>
+
+#pragma warning(disable:4996)
 
 using VA = unsigned __int64;
 using RVA = unsigned int;
-using String = std::string;
 template<typename Type>
 using Ptr = Type*;
 
@@ -34,6 +36,9 @@ struct HookRegister {
 		if (HookFunction(found, org, hook)!= 0) printf("FailedToHook: %s\n", sym);
 	}
 };
+
+std::string getTime();
+
 /* *********************************  定义宏区  *********************************** */
 #define SYMHOOK(name,ret,sym,...)				\
 struct name {									\
@@ -53,7 +58,6 @@ ret name::_hook(__VA_ARGS__)
 
 #define _U(x) u8 ## x
 
-#define GetTime string time = getTime()
 // PR(0, u8"标准流输出"<<u8"!!!")
 #define PR(type, ...)\
 	if (type == 0)\
